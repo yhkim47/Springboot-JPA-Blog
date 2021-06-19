@@ -8,10 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -24,25 +23,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Board {
+public class Reply {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false, length = 100)
-	private String title;
-	
-	@Lob
+	@Column(nullable = false, length = 200)
 	private String content;
 	
-	@ColumnDefault("0")
-	private int count;
-	
-	@ManyToOne // Many=Board, One=User
+	@ManyToOne
 	@JoinColumn(name = "userId")
 	private User user;
-
+	
+	@ManyToOne
+	@JoinColumn(name = "boardId")
+	private Board board;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
-	
 }
