@@ -1,8 +1,13 @@
 package com.cos.blog.test;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,11 +67,6 @@ public class DummyControllerTest {
 			}
 		});
 		*/
-<<<<<<< HEAD
-		
-=======
-		  
->>>>>>> master_14강
 		// 람다식
 		User user = userRepository.findById(id).orElseThrow(() -> {
 				return new IllegalArgumentException("해당 유저는 없습니다. id:" + id);
@@ -75,5 +75,17 @@ public class DummyControllerTest {
 		// 객체가 리턴되는 경우 MessageConverter가 Jackson을 이용하여 JSON을 변경하여 브라우저에 전달한다.
 		// Content-Type : application/json
 		return user;
+	}
+	
+	@GetMapping("/dummy/users")
+	public List<User> list() {
+		return userRepository.findAll();
+	} 
+	
+	@GetMapping("/dummy/user")
+	public Page<User> pageList(@PageableDefault(size = 2, sort = "id", direction = Sort.Direction.DESC) Pageable pagarable) {
+		Page<User> pagingUser = userRepository.findAll(pagarable);
+		
+		return pagingUser;
 	}
 }
