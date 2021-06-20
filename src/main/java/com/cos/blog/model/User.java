@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +26,7 @@ import lombok.ToString;
 @ToString
 @Builder
 @Entity // User class가 마리아DB에 테이블로 생성된다.
-@DynamicInsert // null인 필드는 제외하고 insert한다.
+//@DynamicInsert // null인 필드는 제외하고 insert한다.
 public class User {
 	@Id // Primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // 프로젝트에서 연결된 DB의 넘버링 전략을 따른다.
@@ -38,9 +40,9 @@ public class User {
 	
 	@Column(nullable = false, length = 50)
 	private String email;
-	
-	@ColumnDefault("'user'")
-	private String role; // admin/user/manager
+	  
+	@Enumerated(EnumType.STRING)
+	private RoleType role; // RoleType사용
 
 	@CreationTimestamp
 	private Timestamp createDate;	
