@@ -62,7 +62,11 @@ public class DummyControllerTest {
 			}
 		});
 		*/
+<<<<<<< HEAD
 		
+=======
+		  
+>>>>>>> master_14강
 		// 람다식
 		User user = userRepository.findById(id).orElseThrow(() -> {
 				return new IllegalArgumentException("해당 유저는 없습니다. id:" + id);
